@@ -92,6 +92,11 @@ public class PlayerMovement : MonoBehaviour
         }
 
         WallSlide();
+
+        if (wallJumpCounter > 0)
+        {
+            wallJumpCounter -= Time.deltaTime;
+        }
     }
 
     private void FixedUpdate()
@@ -174,9 +179,6 @@ public class PlayerMovement : MonoBehaviour
             wallJumpCounter = wallJumpTime;
 
             CancelInvoke(nameof(StopWallJumping));
-        } else
-        {
-            wallJumpCounter -= Time.deltaTime;
         }
 
         if(context.performed && wallJumpCounter > 0f)
