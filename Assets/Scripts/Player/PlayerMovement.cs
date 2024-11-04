@@ -31,6 +31,9 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isFacingRight = true;
 
+    [SerializeField] private GameObject target;
+    [SerializeField] private float lookAheadModifier = 3f;
+
     private Animator anim;
 
 
@@ -67,6 +70,14 @@ public class PlayerMovement : MonoBehaviour
         if (!IsGrounded() && isWallSliding)
         {
             anim.Play("Player_WallHang");
+        }
+
+        if(horizontal > 0 || horizontal < 0)
+        {
+            target.transform.position = new Vector2(transform.localPosition.x + horizontal * lookAheadModifier, target.transform.position.y);
+        } else
+        {
+            target.transform.position = new Vector2(transform.localPosition.x, target.transform.position.y);
         }
 
 
