@@ -11,7 +11,10 @@ public class PlayerMovement : MonoBehaviour
 
     private float horizontal;
     [SerializeField] private float speed = 10f;
+    [SerializeField] private float runSpeed = 18f;
+    private float activeSpeed;
     [SerializeField] private float jumpForce = 16f;
+    private bool isDoubleJumping;
 
     [SerializeField] private float coyoteTime = 0.2f;
     private float coyoteTimeCounter;
@@ -125,17 +128,18 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             anim.Play("Player_Jump");
+            isDoubleJumping = false;
+        } else if(context.performed && !isDoubleJumping)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            isDoubleJumping = true;
         }
 
         if (context.canceled && rb.velocity.y > 0)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-
             coyoteTimeCounter = 0f;
         }
-
-        
-
     }
 
     private bool IsGrounded()
