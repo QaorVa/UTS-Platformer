@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    [HideInInspector] public Rigidbody2D rb;
     public Transform groundCheck;
     public LayerMask groundLayer;
 

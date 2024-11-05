@@ -42,9 +42,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Run",
+                    "name": "Interact",
                     "type": "Button",
-                    "id": "ebbbd3bd-7e32-4a93-bba1-b960a6f1f7a5",
+                    "id": "d1567021-ee7f-4f00-96ce-94e699c26e92",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -296,12 +296,23 @@
                 },
                 {
                     "name": "",
-                    "id": "fe2b3bdc-a431-41f3-a8b5-a0c5089e8506",
-                    "path": "<Keyboard>/leftShift",
+                    "id": "9f1d38e0-e8c0-4236-9009-67576c768900",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c2a450d3-7e7d-4075-b19e-aebb8fd7d246",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Run",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
