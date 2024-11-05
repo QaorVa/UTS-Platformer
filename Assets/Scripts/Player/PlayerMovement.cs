@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Cinemachine;
+using UnityEditor.ShaderGraph.Internal;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -15,6 +17,8 @@ public class PlayerMovement : MonoBehaviour
     private float activeSpeed;
     [SerializeField] private float jumpForce = 16f;
     private bool isDoubleJumping;
+    [SerializeField] private float maxFallSpeed = -70f;
+
 
     [SerializeField] private float coyoteTime = 0.2f;
     private float coyoteTimeCounter;
@@ -39,12 +43,19 @@ public class PlayerMovement : MonoBehaviour
 
     private Animator anim;
 
+    [SerializeField] private CinemachineVirtualCamera vcam;
+    private float originalScreenY;
+    private float originalDeadZoneHeight;
+
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+
+        originalScreenY = vcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenY;
+        originalDeadZoneHeight = vcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_DeadZoneHeight;
     }
 
     // Update is called once per frame
@@ -81,6 +92,16 @@ public class PlayerMovement : MonoBehaviour
         } else
         {
             target.transform.position = new Vector2(transform.localPosition.x, target.transform.position.y);
+        }
+
+        if(rb.velocity.y <= maxFallSpeed + 1f)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, maxFallSpeed);
+            vcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenY = 0.45f;
+        } else
+        {
+            vcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenY = originalScreenY;
+          
         }
 
 

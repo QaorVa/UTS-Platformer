@@ -32,6 +32,7 @@ public class ShootFromPoint : MonoBehaviour
     {
         if(shotTimer <= 0)
         {
+            StartCoroutine(rotateToPlayer.DisableRotation(.5f));
             Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
             shotTimer = startShotTimer;
         }

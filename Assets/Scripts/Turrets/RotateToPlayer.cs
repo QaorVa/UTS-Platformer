@@ -11,6 +11,8 @@ public class RotateToPlayer : MonoBehaviour
 
     [SerializeField] private GameObject pivotPoint;
 
+    public bool isAbleToRotate = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,7 +46,7 @@ public class RotateToPlayer : MonoBehaviour
 
     private void RotateToTarget()
     {
-        if(target != null)
+        if(target != null && isAbleToRotate)
         {
             var direction = (Vector2)(target.position - pivotPoint.transform.position);
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90;
@@ -53,5 +55,12 @@ public class RotateToPlayer : MonoBehaviour
             pivotPoint.transform.rotation = Quaternion.Slerp(pivotPoint.transform.rotation, q, Time.deltaTime * rotationSpeed);
         }
         
+    }
+
+    public IEnumerator DisableRotation(float duration = .4f)
+    {
+        isAbleToRotate = false;
+        yield return new WaitForSeconds(duration);
+        isAbleToRotate = true;
     }
 }

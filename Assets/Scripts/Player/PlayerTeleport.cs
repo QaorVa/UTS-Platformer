@@ -81,9 +81,13 @@ public class PlayerTeleport : MonoBehaviour
         yield return new WaitForSecondsRealtime(delayDuration);
 
         tempPlayerVector3 = transform.parent.position;
-        transform.parent.position = teleportTarget.transform.position;
-        teleportTarget.transform.position = tempPlayerVector3;
 
+        if(teleportTarget != null)
+        {
+            transform.parent.position = teleportTarget.transform.position;
+            teleportTarget.transform.position = tempPlayerVector3;
+        }
+  
         yield return new WaitForSecondsRealtime(delayDuration);
 
         Time.timeScale = 1f;

@@ -9,7 +9,11 @@ public class DamagePlayer : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             CameraShakeTrigger.Instance.TriggerShake();
-            collision.gameObject.GetComponent<PlayerHealth>().Die();
+            if(!PlayerHealth.isDead)
+            {
+                collision.gameObject.GetComponent<PlayerHealth>().Die();
+            }
+            
             Destroy(gameObject);
         } else if (collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Ground")
         {
