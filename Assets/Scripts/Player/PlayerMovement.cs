@@ -56,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
 
         originalScreenY = vcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenY;
         originalDeadZoneHeight = vcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_DeadZoneHeight;
+        activeSpeed = speed;
     }
 
     // Update is called once per frame
@@ -138,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if(!isWallJumping)
         {
-            rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+            rb.velocity = new Vector2(horizontal * activeSpeed, rb.velocity.y);
         }
     }
 
@@ -160,6 +161,20 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
             coyoteTimeCounter = 0f;
+        }
+    }
+
+    public void Run(InputAction.CallbackContext context)
+    {
+
+        if (context.performed)
+        {
+            activeSpeed = runSpeed;
+        }
+
+        if (context.canceled)
+        {
+            activeSpeed = speed;
         }
     }
 
