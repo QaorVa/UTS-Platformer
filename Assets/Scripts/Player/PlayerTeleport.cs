@@ -13,6 +13,8 @@ public class PlayerTeleport : MonoBehaviour
 
     private GameObject teleportTarget;
 
+    private bool isTeleporting = false;
+
     private Vector3 tempPlayerVector3;
 
     private void Start()
@@ -64,12 +66,17 @@ public class PlayerTeleport : MonoBehaviour
 
     public void Teleport()
     {
+        if(isTeleporting)
+        {
+            return;
+        }
+
         if(teleportTarget == null || PlayerHealth.isDead)
         {
             lineRenderer.enabled = false;
             return;
         }
-
+        isTeleporting = true;
         StartCoroutine(TeleportWithDelay());
     }
 
@@ -95,5 +102,6 @@ public class PlayerTeleport : MonoBehaviour
         yield return new WaitForSecondsRealtime(delayDuration);
 
         PlayerHealth.isInvincible = false;
+        isTeleporting = false;
     }
 }

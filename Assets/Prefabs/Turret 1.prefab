@@ -177,9 +177,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 437f5b8efcb21364eb113f42538df238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 5
+  rotationSpeed: 3
   isPlayerInRange: 0
   pivotPoint: {fileID: 4683169938694684811}
+  isAbleToRotate: 1
 --- !u!114 &9059761171966347286
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DamagePlayer : MonoBehaviour
 {
+    [SerializeField] private bool isDestroyable = true;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Player")
@@ -13,12 +15,27 @@ public class DamagePlayer : MonoBehaviour
             {
                 collision.gameObject.GetComponent<PlayerHealth>().Die();
             }
+            if(isDestroyable)
+            {
+                Destroy(gameObject);
+            }
             
-            Destroy(gameObject);
         } else if (collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Ground")
         {
             CameraShakeTrigger.Instance.TriggerShake();
-            Destroy(gameObject);
+            if (isDestroyable)
+            {
+                Destroy(gameObject);
+            }
+        } else if (collision.gameObject.tag == "Teleportable Object")
+        {
+            CameraShakeTrigger.Instance.TriggerShake();
+            collision.gameObject.GetComponent<Destructible>().DisableObject();
+
+            if (isDestroyable)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

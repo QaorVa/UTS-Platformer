@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class PlayerHealth : MonoBehaviour
 
     public Vector3 respawnPoint;
 
+    private float defaultCameraSize;
+    private CinemachineVirtualCamera _virtualCamera;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,12 +30,15 @@ public class PlayerHealth : MonoBehaviour
         anim = GetComponent<Animator>();
 
         respawnPoint = transform.position;
+
+        _virtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
+        defaultCameraSize = _virtualCamera.m_Lens.OrthographicSize;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(currentHealth <= 0)
+        if(currentHealth <= 0 && !isDead)
         {
             Die();
         }
@@ -48,6 +55,7 @@ public class PlayerHealth : MonoBehaviour
         anim.Play("Player_Death"); 
         playerMovement.rb.velocity = Vector2.zero;
         playerMovement.enabled = false;
+        _virtualCamera.m_Lens.OrthographicSize = defaultCameraSize;
 
         if(respawnPoint != null)
         {

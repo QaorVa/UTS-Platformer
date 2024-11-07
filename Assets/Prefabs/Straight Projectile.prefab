@@ -509,9 +509,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffdcdb7a860f2214181130154cc503a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
-  maxSpeed: 60
-  acceleration: 18
+  speed: 50
+  maxSpeed: 80
+  acceleration: 20
 --- !u!114 &6579381420614288228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,6 +537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5d78f4e691d8647876fd8e5aceca62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDestroyable: 1
 --- !u!70 &-4828937001658416191
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -570,7 +571,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.0030057728, y: 0}
-  m_Size: {x: 0.45474765, y: 1.2344513}
+  m_Size: {x: 0.34, y: 1.74}
   m_Direction: 0
 --- !u!114 &2871973893016817935
 MonoBehaviour:

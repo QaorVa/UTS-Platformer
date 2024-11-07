@@ -8,6 +8,7 @@ TagManager:
   - Wall
   - Target
   - Teleportable Object
+  - Destructible
   layers:
   - Default
   - TransparentFX

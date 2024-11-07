@@ -44,8 +44,6 @@ public class PlayerMovement : MonoBehaviour
     private Animator anim;
 
     [SerializeField] private CinemachineVirtualCamera vcam;
-    private float originalScreenY;
-    private float originalDeadZoneHeight;
 
 
     // Start is called before the first frame update
@@ -54,8 +52,6 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
 
-        originalScreenY = vcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenY;
-        originalDeadZoneHeight = vcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_DeadZoneHeight;
         activeSpeed = speed;
     }
 
@@ -89,20 +85,21 @@ public class PlayerMovement : MonoBehaviour
 
         if(horizontal > 0 || horizontal < 0)
         {
-            target.transform.position = new Vector2(transform.localPosition.x + horizontal * lookAheadModifier, target.transform.position.y);
+            target.transform.position = new Vector2(transform.position.x + horizontal * lookAheadModifier + (rb.velocity.x / 4f), transform.position.y + (rb.velocity.y / 5f));
         } else
         {
-            target.transform.position = new Vector2(transform.localPosition.x, target.transform.position.y);
+            target.transform.position = new Vector2(transform.localPosition.x, transform.position.y + (rb.velocity.y / 5f));
         }
 
         if(rb.velocity.y <= maxFallSpeed + 1f)
         {
             rb.velocity = new Vector2(rb.velocity.x, maxFallSpeed);
-            vcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenY = 0.45f;
+            vcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_LookaheadIgnoreY = false;
+            
         } else
         {
-            vcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenY = originalScreenY;
-          
+            vcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_LookaheadIgnoreY = true;
+
         }
 
 
@@ -132,6 +129,11 @@ public class PlayerMovement : MonoBehaviour
         if (wallJumpCounter > 0)
         {
             wallJumpCounter -= Time.deltaTime;
+        }
+
+        if(!IsGrounded())
+        {
+            activeSpeed = speed;
         }
     }
 

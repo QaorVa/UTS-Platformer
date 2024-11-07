@@ -25,6 +25,9 @@ public class RotateToPlayer : MonoBehaviour
         if(isPlayerInRange)
         {
             RotateToTarget();
+        } else
+        {
+            RotateToOrigin();
         }
     }
 
@@ -62,5 +65,20 @@ public class RotateToPlayer : MonoBehaviour
         isAbleToRotate = false;
         yield return new WaitForSeconds(duration);
         isAbleToRotate = true;
+    }
+
+    private void RotateToOrigin()
+    {
+        if(pivotPoint.transform.rotation == Quaternion.identity)
+        {
+            return;
+        }
+
+        if(!isAbleToRotate)
+        {
+            return;
+        }
+
+        pivotPoint.transform.rotation = Quaternion.Slerp(pivotPoint.transform.rotation, Quaternion.identity, Time.deltaTime * (rotationSpeed / 2));
     }
 }
