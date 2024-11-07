@@ -17,10 +17,15 @@ public class PlayerTeleport : MonoBehaviour
 
     private Vector3 tempPlayerVector3;
 
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip teleportActive;
+    [SerializeField] private AudioClip teleportAction;
+
     private void Start()
     {
         
         lineRenderer.enabled = false;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -47,6 +52,8 @@ public class PlayerTeleport : MonoBehaviour
     {
         if(collision.gameObject.tag == "Teleportable Object")
         {
+            audioSource.clip = teleportActive;
+            audioSource.Play();
             teleportTarget = collision.gameObject;
             collision.gameObject.GetComponent<SpriteRenderer>().material = teleportMaterialOn;
             collision.gameObject.GetComponent<Light2D>().enabled = true;
@@ -91,6 +98,8 @@ public class PlayerTeleport : MonoBehaviour
 
         if(teleportTarget != null)
         {
+            audioSource.clip = teleportAction;
+            audioSource.Play();
             transform.parent.position = teleportTarget.transform.position;
             teleportTarget.transform.position = tempPlayerVector3;
         }

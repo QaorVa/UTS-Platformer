@@ -12,6 +12,8 @@ public class Destructible : MonoBehaviour
     private BoxCollider2D boxCollider2D;
     private Rigidbody2D rb;
 
+    private AudioSource audioSource;
+
 
     private void Start()
     {
@@ -21,6 +23,16 @@ public class Destructible : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    private void Update()
+    {
+        if(PlayerHealth.isDead)
+        {
+            transform.position = objectOriginPosition;
+            transform.rotation = objectOriginRotation;
+        }
     }
 
     public IEnumerator RespawnObject()
@@ -38,6 +50,7 @@ public class Destructible : MonoBehaviour
         spriteRenderer.enabled = false;
         boxCollider2D.enabled = false;
         rb.simulated = false;
+        audioSource.Play();
 
         StartCoroutine(RespawnObject());
     }

@@ -24,12 +24,16 @@ public class PlayerHealth : MonoBehaviour
 
     public static int deathCount = 0;
 
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip deathClip;
+
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
         playerMovement = GetComponent<PlayerMovement>();
         anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
 
         respawnPoint = transform.position;
 
@@ -58,6 +62,7 @@ public class PlayerHealth : MonoBehaviour
         playerMovement.rb.velocity = Vector2.zero;
         playerMovement.enabled = false;
         _virtualCamera.m_Lens.OrthographicSize = defaultCameraSize;
+        PlayAudio(deathClip);
         deathCount++;
 
         if(respawnPoint != null)
@@ -74,5 +79,11 @@ public class PlayerHealth : MonoBehaviour
         playerMovement.enabled = true;
         currentHealth = maxHealth;
         transform.position = respawnPoint;
+    }
+
+    private void PlayAudio(AudioClip clip)
+    {
+        audioSource.clip = clip;
+        audioSource.Play();
     }
 }

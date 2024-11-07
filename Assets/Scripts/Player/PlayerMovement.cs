@@ -45,13 +45,16 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private CinemachineVirtualCamera vcam;
 
+    [SerializeField] private AudioClip jumpSound;
+    private AudioSource audioSource;
+
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-
+        audioSource = GetComponent<AudioSource>();
         activeSpeed = speed;
     }
 
@@ -85,10 +88,10 @@ public class PlayerMovement : MonoBehaviour
 
         if(horizontal > 0 || horizontal < 0)
         {
-            target.transform.position = new Vector2(transform.position.x + horizontal * lookAheadModifier + (rb.velocity.x / 4f), transform.position.y + (rb.velocity.y / 5f));
+            target.transform.position = new Vector2(transform.position.x + horizontal * lookAheadModifier + (rb.velocity.x / 4f), transform.position.y + (rb.velocity.y / 1.7f));
         } else
         {
-            target.transform.position = new Vector2(transform.localPosition.x, transform.position.y + (rb.velocity.y / 5f));
+            target.transform.position = new Vector2(transform.localPosition.x, transform.position.y + (rb.velocity.y / 1.7f));
         }
 
         if(rb.velocity.y <= maxFallSpeed + 1f)
@@ -151,11 +154,13 @@ public class PlayerMovement : MonoBehaviour
         if (context.performed && coyoteTimeCounter > 0f)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            PlayAudio(jumpSound);
             anim.Play("Player_Jump");
             isDoubleJumping = false;
         } else if(context.performed && !isDoubleJumping)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            PlayAudio(jumpSound);
             isDoubleJumping = true;
         }
 
@@ -237,6 +242,7 @@ public class PlayerMovement : MonoBehaviour
         if(context.performed && wallJumpCounter > 0f)
         {
             isWallJumping = true;
+            PlayAudio(jumpSound);
             rb.velocity = new Vector2(wallJumpForce.x * wallJumpDirection, wallJumpForce.y);
             wallJumpCounter = 0f;
 
@@ -252,5 +258,11 @@ public class PlayerMovement : MonoBehaviour
     private void StopWallJumping()
     {
         isWallJumping = false;
+    }
+
+    private void PlayAudio(AudioClip clip)
+    {
+        audioSource.clip = clip;
+        audioSource.Play();
     }
 }

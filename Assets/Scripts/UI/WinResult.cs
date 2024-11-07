@@ -23,6 +23,8 @@ public class WinResult : MonoBehaviour
         PlayerHealth.deathCount = 0;
         Timer.seconds = 0;
         Timer.minutes = 0;
+        PlayerHealth.isDead = false;
+        PlayerHealth.isInvincible = false;
 
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }

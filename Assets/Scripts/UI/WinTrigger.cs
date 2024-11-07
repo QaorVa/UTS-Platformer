@@ -20,12 +20,19 @@ public class WinTrigger : MonoBehaviour
         {
             Debug.Log("Player has won!");
             isWon = true;
-            winResult.SetActive(true);
+            StartCoroutine(ShowUI());
             PlayerHealth.isInvincible = true;
             playerMovement.rb.velocity = Vector2.zero;
             playerMovement.anim.Play("Player_Win");
             playerMovement.enabled = false;
         }
+    }
+
+    private IEnumerator ShowUI()
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        winResult.SetActive(true);
     }
 
     
