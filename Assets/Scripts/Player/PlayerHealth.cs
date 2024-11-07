@@ -22,6 +22,8 @@ public class PlayerHealth : MonoBehaviour
     private float defaultCameraSize;
     private CinemachineVirtualCamera _virtualCamera;
 
+    public static int deathCount = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,7 +48,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void Die()
     {
-        if(isInvincible)
+        if(isInvincible || isDead)
         {
             return;
         }
@@ -56,6 +58,7 @@ public class PlayerHealth : MonoBehaviour
         playerMovement.rb.velocity = Vector2.zero;
         playerMovement.enabled = false;
         _virtualCamera.m_Lens.OrthographicSize = defaultCameraSize;
+        deathCount++;
 
         if(respawnPoint != null)
         {

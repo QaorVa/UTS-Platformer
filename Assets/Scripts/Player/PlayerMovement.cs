@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject target;
     [SerializeField] private float lookAheadModifier = 3f;
 
-    private Animator anim;
+    [HideInInspector] public Animator anim;
 
     [SerializeField] private CinemachineVirtualCamera vcam;
 
